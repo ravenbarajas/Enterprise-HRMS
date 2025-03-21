@@ -60,18 +60,19 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, onClose }) => {
             if (!hasPermission(item.roles as any[])) return null;
             
             return (
-              <Link 
+              <div
                 key={item.path} 
-                href={item.path}
-                onClick={handleNavClick}
+                onClick={() => {
+                  window.location.href = item.path;
+                  handleNavClick();
+                }}
+                className={`nav-link cursor-pointer ${isActive(item.path) ? 'nav-link--active' : ''}`}
               >
-                <a className={`nav-link ${isActive(item.path) ? 'nav-link--active' : ''}`}>
-                  <span className="nav-link__icon">
-                    <i className={`fas fa-${item.icon}`}></i>
-                  </span>
-                  <span>{item.name}</span>
-                </a>
-              </Link>
+                <span className="nav-link__icon">
+                  <i className={`fas fa-${item.icon}`}></i>
+                </span>
+                <span>{item.name}</span>
+              </div>
             );
           })}
         </nav>

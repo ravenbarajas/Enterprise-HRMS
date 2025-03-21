@@ -68,13 +68,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         )}
         
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto bg-bg-light-secondary dark:bg-bg-dark-secondary p-md">
-          <div className="mb-lg">
+        <main className="flex-1 overflow-y-auto bg-bg-light-secondary dark:bg-bg-dark-secondary p-4 md:p-6 lg:p-8">
+          <div className="mb-6 md:mb-8">
             <Breadcrumb items={[{ label: 'Home', path: '/' }, ...breadcrumbItems]} />
-            <h1 className="text-2xl font-semibold mt-sm">{title}</h1>
+            <h1 className="text-2xl font-semibold mt-3">{title}</h1>
           </div>
           
-          <div>
+          <div className="space-y-6 md:space-y-8">
             {children}
           </div>
         </main>
