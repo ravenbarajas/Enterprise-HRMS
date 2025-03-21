@@ -1,0 +1,124 @@
+Task Definition
+Create a comprehensive, functional frontend prototype for an Enterprise Human Resource Management System (HRMS) without backend integration. This prototype will serve as a visual and interactive demonstration of the system's capabilities.
+Technical Stack Requirements
+
+React with TypeScript
+Shadcn UI component library
+CSS for styling (no Tailwind CSS)
+Mock data in JSON format for interactive demonstrations
+Client-side state management
+
+Core Functionality Requirements
+1. Authentication System
+
+Design login/logout screens with role selection
+Implement role-based routing and access control for these user types:
+
+Administrator (full access)
+HR Manager (extensive access except system settings)
+Department Manager (limited to team management)
+Employee (self-service access only)
+
+
+
+2. Employee Profile Management
+
+Comprehensive employee profiles including:
+
+Personal information (name, photo, contact, address)
+Employment details (position, department, joining date)
+Document management (ID proofs, certificates)
+Skills and qualifications
+Emergency contacts
+
+
+Profile editing capabilities based on user role
+Employee directory with filtering and search functionality
+
+3. Attendance Tracking
+
+Calendar view of employee attendance
+Check-in/check-out simulation
+Leave application and approval workflow
+Attendance reports with visual representations
+Time-off balance dashboard
+Overtime tracking
+
+4. Payroll Visualization
+
+Salary structure templates
+Payslip generation and preview
+Compensation history
+Tax deduction simulations
+Bonus and incentive management
+Payroll analytics dashboard
+
+5. HR Analytics Dashboard
+
+Key Performance Indicators (KPIs) with visual representations:
+
+Employee turnover rate
+Average tenure
+Department-wise headcount
+Recruitment metrics
+Attendance patterns
+Cost per employee
+
+
+Interactive charts and filters
+Exportable reports
+Custom dashboard configurations per role
+
+6. UI/UX Requirements
+
+Responsive design for desktop and tablet views
+Dark/light mode toggle with system preference detection
+Consistent navigation with breadcrumbs
+Accessibility compliance
+Loading states and error handling
+Confirmation dialogs for critical actions
+Notification system for updates
+
+Prototype Structure
+
+Create a main layout with:
+
+Top navigation bar with user profile and dark/light mode toggle
+Side navigation menu with role-based options
+Main content area
+Footer with version information
+
+
+Implement these key pages:
+
+Dashboard (role-specific)
+Employee Directory
+Individual Employee Profile
+Attendance Management
+Leave Management
+Payroll Dashboard
+Analytics Center
+Settings (for Administrators)
+
+
+
+Technical Implementation Guidelines
+
+Use React Router for navigation
+Implement Context API for state management
+Create reusable components with modular CSS files
+Generate realistic mock data for demonstrations
+Use React Query for mock API interactions
+Implement conditional rendering based on user roles
+Use TypeScript interfaces for all data structures
+Create CSS variables for theming and dark/light mode switching
+Organize CSS with BEM methodology or CSS Modules
+Avoid CSS frameworks - use custom CSS styling throughout
+
+Deliverables
+
+Functional React TypeScript application
+Source code with component structure
+Mock data JSON files
+README with setup instructions
+Screenshots or demo recording of the interface
