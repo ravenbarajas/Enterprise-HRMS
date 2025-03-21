@@ -19,24 +19,38 @@ const StatCard: React.FC<StatCardProps> = ({
   iconColor,
   change
 }) => {
+  // Map color names to actual Tailwind classes
+  const colorMap = {
+    primary: 'text-blue-600 bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400',
+    secondary: 'text-purple-600 bg-purple-100 dark:bg-purple-900/20 dark:text-purple-400',
+    success: 'text-green-600 bg-green-100 dark:bg-green-900/20 dark:text-green-400',
+    warning: 'text-amber-600 bg-amber-100 dark:bg-amber-900/20 dark:text-amber-400',
+    danger: 'text-red-600 bg-red-100 dark:bg-red-900/20 dark:text-red-400'
+  };
+  
+  const iconClasses = colorMap[iconColor];
+  const changeClasses = change?.isPositive 
+    ? 'text-green-600 bg-green-100 dark:bg-green-900/20 dark:text-green-400' 
+    : 'text-red-600 bg-red-100 dark:bg-red-900/20 dark:text-red-400';
+
   return (
-    <div className="stat-card">
-      <div className="stat-card__header">
+    <div className="bg-card rounded-lg shadow-sm border border-border p-4 md:p-5 h-full">
+      <div className="flex justify-between items-start">
         <div>
-          <p className="stat-card__title">{title}</p>
-          <p className="stat-card__value">{value}</p>
+          <p className="text-sm text-muted font-medium mb-1">{title}</p>
+          <p className="text-2xl font-bold">{value}</p>
         </div>
-        <div className={`stat-card__icon bg-${iconColor}-50 dark:bg-${iconColor}-900/20`}>
-          <i className={`fas fa-${icon} text-${iconColor}`}></i>
+        <div className={`p-2.5 rounded-full ${iconClasses}`}>
+          <i className={`fas fa-${icon} text-lg`}></i>
         </div>
       </div>
       
       {change && (
-        <div className="mt-sm">
-          <div className={`stat-card__indicator stat-card__indicator--${change.isPositive ? 'positive' : 'negative'}`}>
-            <i className={`fas fa-arrow-${change.isPositive ? 'up' : 'down'} stat-card__indicator-icon`}></i>
+        <div className="mt-4">
+          <div className={`inline-flex items-center space-x-1 rounded-full px-2 py-1 text-xs font-medium ${changeClasses}`}>
+            <i className={`fas fa-arrow-${change.isPositive ? 'up' : 'down'} text-xs`}></i>
             <span>{change.value}%</span>
-            <span className="stat-card__indicator-text">from {change.timeframe}</span>
+            <span className="text-muted font-normal">from {change.timeframe}</span>
           </div>
         </div>
       )}

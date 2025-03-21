@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Activity {
   id: number;
@@ -9,8 +10,10 @@ interface Activity {
 }
 
 const RecentActivities: React.FC = () => {
-  // Mock data - in a real app, this would come from an API
-  const activities: Activity[] = [
+  const { user } = useAuth();
+  
+  // Admin activities
+  const adminActivities: Activity[] = [
     {
       id: 1,
       type: 'user-add',
@@ -40,42 +43,159 @@ const RecentActivities: React.FC = () => {
       time: '3 days ago'
     }
   ];
+  
+  // HR activities
+  const hrActivities: Activity[] = [
+    {
+      id: 1,
+      type: 'user-add',
+      title: 'New employee onboarded',
+      description: 'Sarah Johnson joined as UX Designer',
+      time: '2 hours ago'
+    },
+    {
+      id: 2,
+      type: 'payroll',
+      title: 'HR policy updated',
+      description: 'Remote work policy has been updated',
+      time: 'Yesterday'
+    },
+    {
+      id: 3,
+      type: 'leave',
+      title: 'Leave requests pending',
+      description: '3 leave requests require your approval',
+      time: '2 days ago'
+    },
+    {
+      id: 4,
+      type: 'alert',
+      title: 'Performance review',
+      description: 'Q3 performance reviews start next week',
+      time: '3 days ago'
+    }
+  ];
+  
+  // Manager activities
+  const managerActivities: Activity[] = [
+    {
+      id: 1,
+      type: 'user-add',
+      title: 'Team meeting scheduled',
+      description: 'Weekly team meeting tomorrow at 10 AM',
+      time: '2 hours ago'
+    },
+    {
+      id: 2,
+      type: 'payroll',
+      title: 'Budget report',
+      description: 'Department budget report is ready for review',
+      time: 'Yesterday'
+    },
+    {
+      id: 3,
+      type: 'leave',
+      title: 'Leave requests pending',
+      description: '2 team members requested time off',
+      time: '2 days ago'
+    },
+    {
+      id: 4,
+      type: 'alert',
+      title: 'Project deadline',
+      description: 'Project Alpha deadline approaching in 5 days',
+      time: '3 days ago'
+    }
+  ];
+  
+  // Employee activities
+  const employeeActivities: Activity[] = [
+    {
+      id: 1,
+      type: 'user-add',
+      title: 'Training scheduled',
+      description: 'New skills training next Tuesday at 2 PM',
+      time: '2 hours ago'
+    },
+    {
+      id: 2,
+      type: 'payroll',
+      title: 'Payslip available',
+      description: 'Your August 2023 payslip is now available',
+      time: 'Yesterday'
+    },
+    {
+      id: 3,
+      type: 'leave',
+      title: 'Leave approved',
+      description: 'Your vacation request has been approved',
+      time: '2 days ago'
+    },
+    {
+      id: 4,
+      type: 'alert',
+      title: 'Team event',
+      description: 'Department team building on Friday 3 PM',
+      time: '3 days ago'
+    }
+  ];
+  
+  // Select activities based on user role
+  let activities = adminActivities;
+  
+  if (user) {
+    if (user.role === 'hr') {
+      activities = hrActivities;
+    } else if (user.role === 'manager') {
+      activities = managerActivities;
+    } else if (user.role === 'employee') {
+      activities = employeeActivities;
+    }
+  }
 
+  // Map activity types to icons and colors
   const getIconForActivityType = (type: Activity['type']) => {
+    const colorMap = {
+      primary: 'text-blue-600 bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400',
+      success: 'text-green-600 bg-green-100 dark:bg-green-900/20 dark:text-green-400',
+      warning: 'text-amber-600 bg-amber-100 dark:bg-amber-900/20 dark:text-amber-400',
+      danger: 'text-red-600 bg-red-100 dark:bg-red-900/20 dark:text-red-400'
+    };
+    
     switch (type) {
       case 'user-add':
-        return { icon: 'user-plus', color: 'primary' };
+        return { icon: 'user-plus', colorClass: colorMap.primary };
       case 'payroll':
-        return { icon: 'file-alt', color: 'success' };
+        return { icon: 'file-alt', colorClass: colorMap.success };
       case 'leave':
-        return { icon: 'calendar-alt', color: 'warning' };
+        return { icon: 'calendar-alt', colorClass: colorMap.warning };
       case 'alert':
-        return { icon: 'exclamation-triangle', color: 'danger' };
+        return { icon: 'exclamation-triangle', colorClass: colorMap.danger };
       default:
-        return { icon: 'bell', color: 'primary' };
+        return { icon: 'bell', colorClass: colorMap.primary };
     }
   };
 
   return (
-    <div className="card shadow-md h-full">
-      <div className="card__header">
-        <h3 className="card__title">Recent Activities</h3>
+    <div className="bg-card rounded-lg shadow-sm border border-border h-full">
+      <div className="border-b border-border px-5 py-4">
+        <h3 className="text-lg font-semibold">Recent Activities</h3>
       </div>
-      <div className="card__body p-0">
-        <ul className="divide-y">
+      <div className="p-0">
+        <ul className="divide-y divide-border">
           {activities.map((activity) => {
-            const { icon, color } = getIconForActivityType(activity.type);
+            const { icon, colorClass } = getIconForActivityType(activity.type);
             
             return (
-              <li key={activity.id} className="py-sm px-md">
-                <div className="flex items-start">
-                  <div className={`h-10 w-10 rounded-full bg-${color}-50 dark:bg-${color}-900/20 flex items-center justify-center mr-sm`}>
-                    <i className={`fas fa-${icon} text-${color}`}></i>
+              <li key={activity.id} className="py-3 px-5">
+                <div className="flex items-start space-x-3">
+                  <div className={`h-10 w-10 rounded-full flex items-center justify-center ${colorClass}`}>
+                    <i className={`fas fa-${icon}`}></i>
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium">{activity.title}</p>
                     <p className="text-sm text-muted">{activity.description}</p>
-                    <p className="text-xs text-muted mt-xs">{activity.time}</p>
+                    <p className="text-xs text-muted mt-1">{activity.time}</p>
                   </div>
                 </div>
               </li>
@@ -83,10 +203,10 @@ const RecentActivities: React.FC = () => {
           })}
         </ul>
       </div>
-      <div className="card__footer text-center">
-        <a href="#" className="text-sm text-primary hover:text-primary-700 dark:hover:text-primary-300">
+      <div className="border-t border-border px-5 py-3 text-center">
+        <button className="text-sm text-primary hover:text-primary-dark transition-colors">
           View all activity
-        </a>
+        </button>
       </div>
     </div>
   );
