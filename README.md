@@ -2,8 +2,6 @@
 
 A feature-rich frontend prototype for an Enterprise Human Resource Management System built with React, TypeScript, and Shadcn UI components. This prototype demonstrates comprehensive HR functionalities with role-based access control and interactive mock data visualization.
 
-![HRMS Preview](./hrmspreview.png)
-
 ## Core Features
 
 ### Authentication & Authorization
